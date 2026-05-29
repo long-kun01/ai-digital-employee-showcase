@@ -55,6 +55,14 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .container {
@@ -190,6 +198,13 @@ section {
   background: rgba(0, 212, 160, 0.1);
 }
 
+.loop-step.active {
+  border-color: #00E5FF;
+  background: rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+  transform: translateY(-5px) scale(1.05);
+}
+
 .step-circle {
   width: 36px;
   height: 36px;
@@ -253,6 +268,15 @@ section {
   border-radius: 12px;
   background: rgba(10, 46, 58, 0.95);
   text-align: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.explanation-card:hover {
+  border-color: rgba(0, 229, 255, 0.5);
+  background: rgba(10, 46, 58, 0.98);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 229, 255, 0.15);
 }
 
 .explanation-icon {

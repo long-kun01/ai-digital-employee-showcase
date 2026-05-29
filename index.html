@@ -9,7 +9,7 @@
   <meta name="description" content="不是工具，是会成长的数字团队">
 
   <!-- 主样式 -->
-  <link rel="stylesheet" href="css/styles-v3.css">
+  <link rel="stylesheet" href="css/styles-v4.css">
 </head>
 <body>
   <!-- 粒子背景 -->
@@ -20,9 +20,23 @@
 
     <!-- HERO区 -->
     <section id="hero" class="hero-section">
-      <h1 class="hero-title">培养一个越用越强的<br>AI数字员工</h1>
-      <p class="hero-subtitle">不是工具，是会成长的数字团队</p>
-      <a href="#loop" class="cta-button">了解如何培养</a>
+      <div class="hero-content">
+        <h1 class="hero-title">培养一个越用越强的<br>AI数字员工</h1>
+        <p class="hero-subtitle">不是工具，是会成长的数字团队</p>
+        <p class="hero-tagline">每次循环都在积累经验，第100次使用时效率提升10倍</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value" data-target="10">0</div>
+            <div class="stat-label">倍效率提升</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-value" data-target="100">0</div>
+            <div class="stat-label">次循环积累</div>
+          </div>
+        </div>
+        <a href="#loop-demo" class="cta-button">体验培养闭环</a>
+      </div>
 
       <div class="scroll-hint">
         <span class="scroll-hint-text">向下滚动查看完整闭环</span>
@@ -32,183 +46,225 @@
       </div>
     </section>
 
-    <!-- 核心闭环区 -->
-    <section id="loop" class="loop-section">
+    <!-- 环状闭环交互区 -->
+    <section id="loop-demo" class="loop-demo-section">
       <div class="container">
         <h2 class="section-title">完整的培养闭环</h2>
-        <p class="section-desc">每次循环都在积累经验，越用越强</p>
+        <p class="section-desc">点击每个环节，查看AI如何一步步成长</p>
 
-        <!-- 闭环可视化 -->
-        <div class="loop-visualization">
-          <!-- 7步流程 -->
-          <div class="loop-steps">
-            <div class="loop-step" data-step="1">
-              <div class="step-circle">1</div>
-              <div class="step-content">
-                <div class="step-title">场景触发</div>
-                <div class="step-desc">遇到业务场景</div>
+        <!-- 环状闭环可视化 -->
+        <div class="loop-container">
+          <!-- 环状布局 -->
+          <div class="circular-loop">
+            <!-- 7个步骤节点 -->
+            <div class="loop-node" data-step="1" data-position="top">
+              <div class="node-inner">
+                <div class="node-number">1</div>
+                <div class="node-label">场景触发</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="2">
-              <div class="step-circle">2</div>
-              <div class="step-content">
-                <div class="step-title">提给AI</div>
-                <div class="step-desc">描述场景和需求</div>
+            <div class="loop-node" data-step="2" data-position="top-right">
+              <div class="node-inner">
+                <div class="node-number">2</div>
+                <div class="node-label">提给AI</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="3">
-              <div class="step-circle">3</div>
-              <div class="step-content">
-                <div class="step-title">设计方案</div>
-                <div class="step-desc">AI生成解决方案</div>
+            <div class="loop-node" data-step="3" data-position="right">
+              <div class="node-inner">
+                <div class="node-number">3</div>
+                <div class="node-label">设计方案</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="4">
-              <div class="step-circle">4</div>
-              <div class="step-content">
-                <div class="step-title">确认/demo</div>
-                <div class="step-desc">人工审核确认</div>
+            <div class="loop-node" data-step="4" data-position="bottom-right">
+              <div class="node-inner">
+                <div class="node-number">4</div>
+                <div class="node-label">确认</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="5">
-              <div class="step-circle">5</div>
-              <div class="step-content">
-                <div class="step-title">执行</div>
-                <div class="step-desc">AI执行任务</div>
+            <div class="loop-node" data-step="5" data-position="bottom">
+              <div class="node-inner">
+                <div class="node-number">5</div>
+                <div class="node-label">执行</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="6">
-              <div class="step-circle">6</div>
-              <div class="step-content">
-                <div class="step-title">数据反馈</div>
-                <div class="step-desc">收集执行结果</div>
+            <div class="loop-node" data-step="6" data-position="bottom-left">
+              <div class="node-inner">
+                <div class="node-number">6</div>
+                <div class="node-label">数据反馈</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow">→</div>
-
-            <div class="loop-step" data-step="7">
-              <div class="step-circle">7</div>
-              <div class="step-content">
-                <div class="step-title">认知沉淀</div>
-                <div class="step-desc">经验固化到知识库</div>
+            <div class="loop-node" data-step="7" data-position="left">
+              <div class="node-inner">
+                <div class="node-number">7</div>
+                <div class="node-label">认知沉淀</div>
               </div>
+              <div class="node-arrow"></div>
             </div>
 
-            <div class="loop-arrow loop-back-arrow">↺</div>
+            <!-- 中心核心区域 -->
+            <div class="loop-center">
+              <div class="center-icon">🔄</div>
+              <div class="center-title">越用越强</div>
+              <div class="center-subtitle">点击步骤查看详情</div>
+            </div>
+          </div>
 
-            <div class="loop-step highlight" data-step="next">
-              <div class="step-circle step-icon">↺</div>
-              <div class="step-content">
-                <div class="step-title">下次复用</div>
-                <div class="step-desc">自动调用已沉淀方案</div>
+          <!-- 步骤详情面板 -->
+          <div class="step-detail-panel" id="step-detail">
+            <div class="detail-content">
+              <div class="detail-placeholder">
+                <div class="placeholder-icon">👆</div>
+                <div class="placeholder-text">点击上方环节查看详情</div>
               </div>
             </div>
           </div>
 
-          <!-- 闭环说明 -->
-          <div class="loop-explanation">
-            <div class="explanation-card">
-              <div class="explanation-icon">🔄</div>
-              <div class="explanation-text">
-                <div class="explanation-title">完整闭环</div>
-                <div class="explanation-desc">从场景触发到认知沉淀，形成完整闭环</div>
-              </div>
+          <!-- 循环计数器 -->
+          <div class="loop-counter">
+            <div class="counter-label">当前循环次数</div>
+            <div class="counter-value">
+              <button class="counter-btn" id="counter-decrease">-</button>
+              <span id="loop-count">1</span>
+              <button class="counter-btn" id="counter-increase">+</button>
             </div>
-
-            <div class="explanation-card">
-              <div class="explanation-icon">📈</div>
-              <div class="explanation-text">
-                <div class="explanation-title">越用越强</div>
-                <div class="explanation-desc">每次循环都在积累经验，下次更准确</div>
-              </div>
-            </div>
-
-            <div class="explanation-card">
-              <div class="explanation-icon">⚡</div>
-              <div class="explanation-text">
-                <div class="explanation-title">持续优化</div>
-                <div class="explanation-desc">基于数据反馈，持续改进决策</div>
-              </div>
-            </div>
+            <div class="counter-hint">增加次数查看AI成长效果</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 越用越强的价值 -->
-    <section id="value" class="value-section">
+    <!-- 越用越强数据可视化 -->
+    <section id="growth-chart" class="growth-section">
       <div class="container">
-        <h2 class="section-title">越用越强的价值</h2>
+        <h2 class="section-title">看得见的成长</h2>
+        <p class="section-desc">随着循环次数增加，AI能力持续提升</p>
 
-        <!-- 对比展示 -->
-        <div class="value-comparison">
-          <!-- 传统工具 -->
-          <div class="value-card traditional">
-            <div class="value-header">
-              <h3 class="value-title">传统AI工具</h3>
-              <div class="value-badge">线性</div>
-            </div>
-            <div class="value-body">
-              <div class="value-chart">
-                <div class="chart-bar" style="width: 100%;">
-                  <span class="chart-label">第1次</span>
-                  <span class="chart-value">效率 1x</span>
-                </div>
-                <div class="chart-bar" style="width: 100%;">
-                  <span class="chart-label">第10次</span>
-                  <span class="chart-value">效率 1x</span>
-                </div>
-                <div class="chart-bar" style="width: 100%;">
-                  <span class="chart-label">第100次</span>
-                  <span class="chart-value">效率 1x</span>
-                </div>
-              </div>
-              <p class="value-note">每次使用都是新的开始，没有积累</p>
+        <!-- 成长曲线 -->
+        <div class="growth-chart-container">
+          <div class="chart-header">
+            <div class="chart-title">效率提升曲线</div>
+            <div class="chart-legend">
+              <span class="legend-item">
+                <span class="legend-dot traditional"></span>
+                传统AI工具
+              </span>
+              <span class="legend-item">
+                <span class="legend-dot digital"></span>
+                AI数字员工
+              </span>
             </div>
           </div>
 
-          <!-- VS -->
-          <div class="value-vs">VS</div>
+          <div class="chart-body">
+            <canvas id="growth-chart-canvas"></canvas>
+          </div>
 
-          <!-- AI数字员工 -->
-          <div class="value-card digital-employee">
-            <div class="value-header">
-              <h3 class="value-title">AI数字员工</h3>
-              <div class="value-badge">指数</div>
+          <div class="chart-data">
+            <div class="data-item">
+              <div class="data-label">第1次使用</div>
+              <div class="data-bar">
+                <div class="data-fill traditional" style="width: 100%;"></div>
+                <div class="data-fill digital" style="width: 100%;"></div>
+              </div>
+              <div class="data-value">
+                <span class="traditional">1x</span>
+                <span class="digital">1x</span>
+              </div>
             </div>
-            <div class="value-body">
-              <div class="value-chart">
-                <div class="chart-bar" style="width: 100%;">
-                  <span class="chart-label">第1次</span>
-                  <span class="chart-value">效率 1x</span>
-                </div>
-                <div class="chart-bar" style="width: 100%;">
-                  <span class="chart-label">第10次</span>
-                  <span class="chart-value">效率 3x</span>
-                </div>
-                <div class="chart-bar highlight" style="width: 100%;">
-                  <span class="chart-label">第100次</span>
-                  <span class="chart-value">效率 10x</span>
+
+            <div class="data-item">
+              <div class="data-label">第10次使用</div>
+              <div class="data-bar">
+                <div class="data-fill traditional" style="width: 100%;"></div>
+                <div class="data-fill digital" style="width: 150%;"></div>
+              </div>
+              <div class="data-value">
+                <span class="traditional">1x</span>
+                <span class="digital">3x</span>
+              </div>
+            </div>
+
+            <div class="data-item">
+              <div class="data-label">第50次使用</div>
+              <div class="data-bar">
+                <div class="data-fill traditional" style="width: 100%;"></div>
+                <div class="data-fill digital" style="width: 350%;"></div>
+              </div>
+              <div class="data-value">
+                <span class="traditional">1x</span>
+                <span class="digital">6x</span>
+              </div>
+            </div>
+
+            <div class="data-item highlight">
+              <div class="data-label">第100次使用</div>
+              <div class="data-bar">
+                <div class="data-fill traditional" style="width: 100%;"></div>
+                <div class="data-fill digital" style="width: 500%;"></div>
+              </div>
+              <div class="data-value">
+                <span class="traditional">1x</span>
+                <span class="digital highlight-value">10x</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 成长指标 -->
+        <div class="growth-metrics">
+          <div class="metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-title">准确率</div>
+            <div class="metric-chart">
+              <div class="metric-bar">
+                <div class="metric-fill" data-percent="85">
+                  <span class="metric-value">85%</span>
                 </div>
               </div>
-              <p class="value-note">每次循环都在沉淀经验，越用越强</p>
             </div>
+            <div class="metric-desc">首次使用</div>
+          </div>
+
+          <div class="metric-arrow">→</div>
+
+          <div class="metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-title">准确率</div>
+            <div class="metric-chart">
+              <div class="metric-bar">
+                <div class="metric-fill highlight" data-percent="99">
+                  <span class="metric-value">99%</span>
+                </div>
+              </div>
+            </div>
+            <div class="metric-desc">第100次使用</div>
+          </div>
+
+          <div class="metric-arrow">→</div>
+
+          <div class="metric-card">
+            <div class="metric-icon">⏱️</div>
+            <div class="metric-title">响应时间</div>
+            <div class="metric-chart">
+              <div class="metric-bar">
+                <div class="metric-fill highlight" data-percent="90">
+                  <span class="metric-value">-70%</span>
+                </div>
+              </div>
+            </div>
+            <div class="metric-desc">从方案库直接调用</div>
           </div>
         </div>
       </div>
@@ -225,6 +281,14 @@
             <div class="simple-number">①</div>
             <h3 class="simple-title">识别场景</h3>
             <p class="simple-desc">找到重复性的业务场景</p>
+            <div class="simple-example">
+              <div class="example-label">示例场景：</div>
+              <div class="example-list">
+                <div class="example-item">📄 周报生成</div>
+                <div class="example-item">📊 数据分析</div>
+                <div class="example-item">✉️ 客户回复</div>
+              </div>
+            </div>
           </div>
 
           <div class="simple-arrow">→</div>
@@ -233,6 +297,14 @@
             <div class="simple-number">②</div>
             <h3 class="simple-title">培养AI</h3>
             <p class="simple-desc">与AI协作，形成方案</p>
+            <div class="simple-example">
+              <div class="example-label">培养要点：</div>
+              <div class="example-list">
+                <div class="example-item">💬 给完整上下文</div>
+                <div class="example-item">📝 提供参考Example</div>
+                <div class="example-item">✅ 审核方案再执行</div>
+              </div>
+            </div>
           </div>
 
           <div class="simple-arrow">→</div>
@@ -241,6 +313,14 @@
             <div class="simple-number">③</div>
             <h3 class="simple-title">持续使用</h3>
             <p class="simple-desc">每次使用都在积累经验</p>
+            <div class="simple-example">
+              <div class="example-label">成长效果：</div>
+              <div class="example-list">
+                <div class="example-item">📈 方案越来越精准</div>
+                <div class="example-item">⚡ 响应越来越快</div>
+                <div class="example-item">🎯 准确率持续提升</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -250,23 +330,23 @@
           <ul class="principles-list">
             <li class="principle-item">
               <span class="principle-check">✓</span>
-              <span>先方案后执行</span>
+              <span>先方案后执行 - 每次都让AI先给出方案</span>
             </li>
             <li class="principle-item">
               <span class="principle-check">✓</span>
-              <span>Example很重要（给AI完整上下文）</span>
+              <span>Example很重要 - 给AI完整的参考案例</span>
             </li>
             <li class="principle-item">
               <span class="principle-check">✓</span>
-              <span>命令行完成所有操作</span>
+              <span>命令行完成操作 - 保留完整的操作记录</span>
             </li>
             <li class="principle-item">
               <span class="principle-check">✓</span>
-              <span>审核方案再执行</span>
+              <span>审核方案再执行 - 人工确认后AI执行</span>
             </li>
             <li class="principle-item">
               <span class="principle-check">✓</span>
-              <span>数据反馈沉淀</span>
+              <span>数据反馈沉淀 - 结果数据回写知识库</span>
             </li>
           </ul>
         </div>
@@ -277,19 +357,20 @@
     <section id="cta" class="cta-section">
       <div class="container">
         <h2 class="cta-title">准备好培养你的第一个AI员工了吗？</h2>
-        <a href="#" class="cta-button-secondary">开始培养</a>
+        <p class="cta-subtitle">从现在开始，每次使用都是一次成长</p>
+        <a href="#loop-demo" class="cta-button-secondary">回到闭环演示</a>
       </div>
     </section>
 
     <!-- MVP提示 -->
     <div class="mvp-notice">
-      <p>🚧 这是V3原型，聚焦"越用越强"的核心价值</p>
-      <p>完整版本将包含更多案例和交互功能</p>
+      <p>🚧 这是V4版本，强化闭环互动与成长可视化</p>
+      <p>访问地址：github.com/long-kun01/ai-digital-employee-showcase</p>
     </div>
 
   </div>
 
   <!-- 脚本 -->
-  <script src="js/bundle-v3.js"></script>
+  <script src="js/bundle-v4.js"></script>
 </body>
 </html>

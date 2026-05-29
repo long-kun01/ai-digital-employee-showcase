@@ -177,8 +177,33 @@ function highlightStep(stepNumber) {
   }
 }
 
+// ==================== 滚动触发动画 ====================
+function initScrollAnimations() {
+  const sections = document.querySelectorAll('section');
+
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+  return observer;
+}
+
 // ==================== 初始化 ====================
 let particleSystem = null;
+let scrollObserver = null;
 
 function init() {
   try {
@@ -187,6 +212,9 @@ function init() {
   } catch (e) {
     console.warn('Particle system initialization failed:', e);
   }
+
+  // 初始化滚动动画
+  scrollObserver = initScrollAnimations();
 
   // CTA按钮平滑滚动
   const ctaButton = document.querySelector('.cta-button');
@@ -221,5 +249,8 @@ if (document.readyState === 'loading') {
 window.addEventListener('beforeunload', () => {
   if (particleSystem) {
     particleSystem.destroy();
+  }
+  if (scrollObserver) {
+    scrollObserver.disconnect();
   }
 });
