@@ -23,7 +23,8 @@ const CONFIG = {
       { loops: 2, efficiency: 3.4, speed: 1.5, accuracy: 91, fit: 82 },
       { loops: 3, efficiency: 6.8, speed: 2.0, accuracy: 95, fit: 88 },
       { loops: 4, efficiency: 10, speed: 2.8, accuracy: 97, fit: 93 },
-      { loops: 5, efficiency: 20, speed: 4.0, accuracy: 99, fit: 96 }
+      { loops: 5, efficiency: 20, speed: 4.0, accuracy: 99, fit: 96 },
+      { loops: 10, efficiency: 40, speed: 8.0, accuracy: 99.5, fit: 98 }
     ]
   }
 };
@@ -544,59 +545,49 @@ class TurntableController {
   }
 }
 
+// ==================== 指标计算（指数型） ====================
+function calculateExponentialMetric(loops, baseValue, maxValue, growthRate) {
+  if (loops === 0) return baseValue;
+  if (loops === 1) return baseValue + (maxValue - baseValue) * 0.1;
+  if (loops === 2) return baseValue + (maxValue - baseValue) * 0.25;
+  if (loops === 3) return baseValue + (maxValue - baseValue) * 0.5;
+  if (loops === 4) return baseValue + (maxValue - baseValue) * 0.75;
+  if (loops === 5) return maxValue;
+  // 指数增长
+  const growth = Math.pow(growthRate, loops - 5);
+  return Math.min(maxValue * 1.5, maxValue * growth);
+}
+
 // ==================== 指标更新 ====================
 function updateMetrics(loops) {
-  // 找到对应的阶段数据
-  let stage = CONFIG.growth.stages[0];
-  for (let i = CONFIG.growth.stages.length - 1; i >= 0; i--) {
-    if (loops >= CONFIG.growth.stages[i].loops) {
-      stage = CONFIG.growth.stages[i];
-      break;
-    }
-  }
-
-  // 如果没有达到任何阶段，使用基础值
-  if (loops === 0 && !stage) {
-    stage = { loops: 0, speed: 1.0, accuracy: 85, fit: 70 };
-  }
+  // 使用指数型计算
+  const speed = calculateExponentialMetric(loops, 1.0, 10.0, 1.3);
+  const accuracy = calculateExponentialMetric(loops, 85, 99.9, 1.1);
+  const fit = calculateExponentialMetric(loops, 70, 99, 1.15);
 
   // 更新速度指标
   const speedElement = document.querySelector('[data-metric="speed"]');
   const speedFill = document.querySelector('[data-fill="speed"]');
   if (speedElement && speedFill) {
-    animateValue(speedElement, parseFloat(speedElement.textContent), stage.speed, 1000);
-    speedFill.style.width = `${(stage.speed / 5) * 100}%`;
+    animateValue(speedElement, parseFloat(speedElement.textContent), speed, 1000);
+    speedFill.style.width = `${(speed / 12) * 100}%`;
   }
 
   // 更新准确率指标
   const accuracyElement = document.querySelector('[data-metric="accuracy"]');
   const accuracyFill = document.querySelector('[data-fill="accuracy"]');
   if (accuracyElement && accuracyFill) {
-    animateValue(accuracyElement, parseInt(accuracyElement.textContent), stage.accuracy, 1000);
-    accuracyFill.style.width = `${stage.accuracy}%`;
+    animateValue(accuracyElement, parseInt(accuracyElement.textContent), accuracy, 1000);
+    accuracyFill.style.width = `${accuracy}%`;
   }
 
   // 更新贴合度指标
   const fitElement = document.querySelector('[data-metric="fit"]');
   const fitFill = document.querySelector('[data-fill="fit"]');
   if (fitElement && fitFill) {
-    animateValue(fitElement, parseInt(fitElement.textContent), stage.fit, 1000);
-    fitFill.style.width = `${stage.fit}%`;
+    animateValue(fitElement, parseInt(fitElement.textContent), fit, 1000);
+    fitFill.style.width = `${fit}%`;
   }
-
-  // 更新指标描述文本
-  const descElements = document.querySelectorAll('.metric-desc');
-  const descTexts = [
-    `第${loops}圈转动`,
-    `第${loops}圈转动`,
-    `第${loops}圈转动`
-  ];
-
-  descElements.forEach((el, index) => {
-    if (el && descTexts[index]) {
-      el.textContent = descTexts[index];
-    }
-  });
 }
 
 function animateValue(element, start, end, duration) {
@@ -774,6 +765,61 @@ function initGrowthChart() {
   });
 }
 
+// ==================== 图表控制器 ====================
+let chartLoopCount = 0;
+
+function initChartControls() {
+  const chartSpinOnce = document.getElementById('chart-spin-once');
+  const chartSpinFive = document.getElementById('chart-spin-five');
+  const chartDecrease = document.getElementById('chart-decrease');
+  const chartIncrease = document.getElementById('chart-increase');
+  const loopCountDisplay = document.getElementById('chart-loop-count');
+
+  if (chartSpinOnce) {
+    chartSpinOnce.addEventListener('click', () => {
+      chartLoopCount++;
+      updateChartControls(chartLoopCount);
+      updateMetrics(chartLoopCount);
+      updateChart(chartLoopCount);
+    });
+  }
+
+  if (chartSpinFive) {
+    chartSpinFive.addEventListener('click', () => {
+      chartLoopCount += 5;
+      updateChartControls(chartLoopCount);
+      updateMetrics(chartLoopCount);
+      updateChart(chartLoopCount);
+    });
+  }
+
+  if (chartDecrease) {
+    chartDecrease.addEventListener('click', () => {
+      if (chartLoopCount > 0) {
+        chartLoopCount--;
+        updateChartControls(chartLoopCount);
+        updateMetrics(chartLoopCount);
+        updateChart(chartLoopCount);
+      }
+    });
+  }
+
+  if (chartIncrease) {
+    chartIncrease.addEventListener('click', () => {
+      chartLoopCount++;
+      updateChartControls(chartLoopCount);
+      updateMetrics(chartLoopCount);
+      updateChart(chartLoopCount);
+    });
+  }
+
+  function updateChartControls(count) {
+    if (loopCountDisplay) {
+      loopCountDisplay.textContent = count;
+    }
+  }
+}
+
 // ==================== 二维码弹窗 ====================
 function initQRCodeModal() {
   const modal = document.getElementById('qrcode-modal');
@@ -822,6 +868,9 @@ function init() {
 
   // 初始化成长图表
   initGrowthChart();
+
+  // 初始化图表控制按钮
+  initChartControls();
 
   // 初始化二维码弹窗
   initQRCodeModal();
