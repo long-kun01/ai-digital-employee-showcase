@@ -415,10 +415,90 @@ class TurntableController {
       });
     });
 
+    // 添加拖动旋转功能
+    this.initDragRotation();
+
     // 窗口大小变化时重新计算节点位置
     window.addEventListener('resize', () => {
       setTimeout(() => this.initNodePositions(), 100);
     });
+  }
+
+  initDragRotation() {
+    const ring = this.ring;
+    let isDragging = false;
+    let startAngle = 0;
+    let currentRotation = 0;
+
+    // 计算从中心点的角度
+    const getAngle = (clientX, clientY) => {
+      const rect = ring.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      return Math.atan2(clientY - centerY, clientX - centerX) * 180 / Math.PI;
+    };
+
+    // 鼠标事件
+    ring.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startAngle = getAngle(e.clientX, e.clientY);
+      currentRotation = this.currentRotation;
+      ring.style.transition = 'none';
+    });
+
+    // 触摸事件
+    ring.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      startAngle = getAngle(touch.clientX, touch.clientY);
+      currentRotation = this.currentRotation;
+      ring.style.transition = 'none';
+      e.preventDefault();
+    }, { passive: false });
+
+    const handleMove = (clientX, clientY) => {
+      if (!isDragging) return;
+
+      const angle = getAngle(clientX, clientY);
+      const deltaAngle = angle - startAngle;
+
+      this.currentRotation = currentRotation + deltaAngle;
+      ring.style.transform = `rotate(${this.currentRotation}deg)`;
+    };
+
+    const handleEnd = () => {
+      if (!isDragging) return;
+      isDragging = false;
+
+      // 计算转动了多少圈
+      const rotationDiff = this.currentRotation - currentRotation;
+      const additionalLoops = Math.floor(Math.abs(rotationDiff) / 360);
+
+      if (additionalLoops > 0) {
+        this.loopCount += additionalLoops;
+        this.updateDisplay();
+      }
+
+      ring.style.transition = 'transform 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    };
+
+    // 鼠标移动
+    document.addEventListener('mousemove', (e) => {
+      handleMove(e.clientX, e.clientY);
+    });
+
+    document.addEventListener('mouseup', handleEnd);
+
+    // 触摸移动
+    document.addEventListener('touchmove', (e) => {
+      if (isDragging) {
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('touchend', handleEnd);
   }
 
   spin() {
@@ -438,7 +518,8 @@ class TurntableController {
     // 延迟更新显示，让动画更流畅
     setTimeout(() => {
       this.updateDisplay();
-      this.highlightCurrentStep();
+      // 移除自动显示步骤详情，只在用户点击具体步骤时显示
+      // this.highlightCurrentStep();
       this.isSpinning = false;
       this.spinBtn.disabled = false;
     }, 1500);
@@ -498,8 +579,7 @@ class TurntableController {
       currentNode.classList.add('active');
     }
 
-    // 显示步骤详情
-    this.showStepDetail(this.currentStep);
+    // 不再自动显示步骤详情，只在用户点击具体步骤时显示
   }
 
   showStepDetail(stepNumber) {
