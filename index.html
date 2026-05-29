@@ -2,15 +2,14 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI数字员工 - 让AI成为你团队中最懂业务的员工</title>
-  <meta name="description" content="三步训练法，把你的业务经验变成可复制的AI数字员工">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>AI数字员工 - 把你的业务经验变成永不离职的AI数字员工</title>
+  <meta name="description" content="三步训练法，让AI掌握你的业务逻辑">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- 自定义样式 -->
-  <link rel="stylesheet" href="css/custom.css">
+  <!-- 主样式 -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <!-- 粒子背景 -->
@@ -20,171 +19,208 @@
   <div class="content-wrapper">
 
     <!-- HERO区 -->
-    <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <div class="max-w-4xl mx-auto fade-in">
-        <!-- 主标题 -->
-        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-          让AI成为你团队中最<br class="md:hidden">懂业务的员工
-        </h1>
+    <section id="hero">
+      <h1 class="hero-title">把你的业务经验变成<br>永不离职的AI数字员工</h1>
+      <p class="hero-subtitle">三步训练法，让AI掌握你的业务逻辑</p>
+      <a href="#methodology" class="cta-button">开始了解</a>
 
-        <!-- 副标题 -->
-        <p class="text-xl md:text-2xl text-[#008080] mb-12 max-w-2xl mx-auto">
-          三步训练法，把你的业务经验变成<br class="md:hidden">可复制的AI数字员工
-        </p>
-
-        <!-- CTA按钮 -->
-        <button
-          data-scroll-to="concept-section"
-          class="glow-button px-8 py-4 rounded-lg text-lg font-semibold text-[#0A2E3A] hover:opacity-90 transition-opacity"
-        >
-          开始体验
-        </button>
-
-        <!-- 滚动提示 -->
-        <div class="scroll-hint mt-16 text-[#008080]">
-          <div class="flex flex-col items-center">
-            <span class="text-sm mb-2">向下滚动查看更多</span>
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </div>
-        </div>
+      <div class="scroll-hint">
+        <span class="scroll-hint-text">向下滚动查看更多</span>
+        <svg class="scroll-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
       </div>
     </section>
 
-    <!-- 概念认知区 -->
-    <section id="concept-section" class="min-h-screen py-20 px-4">
-      <div class="max-w-6xl mx-auto">
-        <!-- 区域标题 -->
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center fade-in">
-          为什么需要AI数字员工？
-        </h2>
+    <!-- 为什么需要AI数字员工？ -->
+    <section id="comparison" class="comparison-section">
+      <div class="container">
+        <h2 class="section-title">为什么需要AI数字员工？</h2>
 
-        <!-- 对比卡片组 -->
-        <div class="comparison-group mb-16 fade-in">
+        <div class="comparison-cards">
           <!-- 现状问题 -->
-          <div class="concept-card flex-1 rounded-lg p-8">
-            <h3 class="text-2xl font-bold text-[#00E5FF] mb-6">现状问题</h3>
-            <ul class="space-y-4">
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">❌</span>
-                <span class="text-lg">招人难</span>
+          <div class="comparison-card">
+            <h3 class="comparison-card-title">现状问题</h3>
+            <ul class="comparison-list">
+              <li class="comparison-item">
+                <span class="comparison-icon">❌</span>
+                <span>招人难</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">❌</span>
-                <span class="text-lg">培训慢</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">❌</span>
+                <span>培训慢</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">❌</span>
-                <span class="text-lg">流失率高</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">❌</span>
+                <span>流失率高</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">❌</span>
-                <span class="text-lg">经验难传承</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">❌</span>
+                <span>经验难传承</span>
               </li>
             </ul>
           </div>
 
           <!-- 对比箭头 -->
-          <div class="comparison-arrow flex items-center justify-center">
-            <svg class="w-12 h-12 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="comparison-arrow">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
           </div>
 
           <!-- AI数字员工 -->
-          <div class="concept-card flex-1 rounded-lg p-8">
-            <h3 class="text-2xl font-bold text-[#00E5FF] mb-6">AI数字员工</h3>
-            <ul class="space-y-4">
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">✅</span>
-                <span class="text-lg">即时上岗</span>
+          <div class="comparison-card">
+            <h3 class="comparison-card-title">AI数字员工</h3>
+            <ul class="comparison-list">
+              <li class="comparison-item">
+                <span class="comparison-icon">✅</span>
+                <span>即时上岗</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">✅</span>
-                <span class="text-lg">秒级学习</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">✅</span>
+                <span>秒级学习</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">✅</span>
-                <span class="text-lg">永不离职</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">✅</span>
+                <span>永不离职</span>
               </li>
-              <li class="flex items-center gap-3">
-                <span class="text-2xl">✅</span>
-                <span class="text-lg">经验固化</span>
+              <li class="comparison-item">
+                <span class="comparison-icon">✅</span>
+                <span>经验固化</span>
               </li>
             </ul>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- 市场机会卡片 -->
-        <div class="grid md:grid-cols-2 gap-8 mb-8">
-          <!-- 市场机会 -->
-          <div class="concept-card rounded-lg p-8 fade-in">
-            <h3 class="text-2xl font-bold text-[#00E5FF] mb-4">市场机会</h3>
-            <p class="text-lg text-gray-200 leading-relaxed">
-              AI员工是新时代的"数字资产"，谁先掌握谁就获得效率红利
-            </p>
-            <div class="mt-6">
-              <button
-                data-expand="market-details"
-                class="text-[#00E5FF] hover:underline flex items-center gap-2"
-              >
-                <span>了解更多</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div id="market-details" class="card-details text-gray-300">
-                <p class="text-base leading-relaxed">
-                  当前AI技术已成熟，企业开始大规模应用AI提升效率。AI数字员工可以24/7工作，
-                  不需要休息，能够快速学习新技能，是企业数字化转型的关键抓手。
-                </p>
-              </div>
-            </div>
+    <!-- 如何培养你的AI数字员工？ -->
+    <section id="methodology" class="methodology-section">
+      <div class="container">
+        <h2 class="section-title">如何培养你的AI数字员工？</h2>
+
+        <!-- 三步训练法 -->
+        <div class="three-steps">
+          <div class="step-card" onclick="toggleFullProcess()">
+            <div class="step-number">①</div>
+            <div class="step-title">场景触发</div>
+            <div class="step-desc">识别可AI化的业务场景</div>
           </div>
 
-          <!-- 定义澄清 -->
-          <div class="concept-card rounded-lg p-8 fade-in">
-            <h3 class="text-2xl font-bold text-[#00E5FF] mb-4">什么是AI数字员工？</h3>
-            <p class="text-lg text-gray-200 leading-relaxed">
-              不是工具，是"懂业务的AI"，通过训练掌握你公司的业务逻辑和决策标准
-            </p>
-            <div class="mt-6">
-              <button
-                data-expand="definition-details"
-                class="text-[#00E5FF] hover:underline flex items-center gap-2"
-              >
-                <span>深入了解</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div id="definition-details" class="card-details text-gray-300">
-                <p class="text-base leading-relaxed">
-                  普通AI工具需要你告诉它每一步怎么做。AI数字员工不同，
-                  它通过学习你的业务案例和决策标准，能够像经验丰富的员工一样，
-                  独立完成复杂的业务任务。
-                </p>
-              </div>
-            </div>
+          <div class="step-arrow">→</div>
+
+          <div class="step-card" onclick="toggleFullProcess()">
+            <div class="step-number">②</div>
+            <div class="step-title">AI协作</div>
+            <div class="step-desc">与AI协作形成方案</div>
+          </div>
+
+          <div class="step-arrow">→</div>
+
+          <div class="step-card" onclick="toggleFullProcess()">
+            <div class="step-number">③</div>
+            <div class="step-title">数据反馈</div>
+            <div class="step-desc">执行后沉淀经验</div>
           </div>
         </div>
 
-        <!-- MVP提示 -->
-        <div class="text-center mt-16 text-[#008080] fade-in">
-          <p class="text-base">
-            🚧 这是MVP原型，仅包含HERO区和概念认知区
-          </p>
-          <p class="text-sm mt-2">
-            完整版本将包含：方法论总览区、效果证据区、CTA区
+        <!-- 完整流程（默认隐藏，点击展开） -->
+        <div class="full-process" id="full-process" style="display: none;">
+          <h3 style="color: #00E5FF; font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; text-align: center;">完整7步流程</h3>
+
+          <div class="process-flow">
+            <span class="process-step">场景触发</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">提给AI</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">设计方案</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">确认/demo</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">执行</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">数据反馈</span>
+            <span class="process-arrow">→</span>
+            <span class="process-step">认知沉淀</span>
+          </div>
+
+          <div class="process-loop">
+            ↑ 形成闭环，持续优化
+          </div>
+
+          <div class="principles">
+            <h4 class="principles-title">关键原则</h4>
+            <ul class="principle-list">
+              <li class="principle-item">
+                <span class="principle-check">✓</span>
+                <span>先方案后执行（避免"没有方案就直接干了"）</span>
+              </li>
+              <li class="principle-item">
+                <span class="principle-check">✓</span>
+                <span>Example很重要（给AI完整上下文，学习决策逻辑）</span>
+              </li>
+              <li class="principle-item">
+                <span class="principle-check">✓</span>
+                <span>命令行完成所有操作（让AI捕捉行为模式）</span>
+              </li>
+              <li class="principle-item">
+                <span class="principle-check">✓</span>
+                <span>审核方案再执行（方案确认后才进入执行阶段）</span>
+              </li>
+              <li class="principle-item">
+                <span class="principle-check">✓</span>
+                <span>数据反馈沉淀（执行后要有人审核，固化流程）</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 什么是AI数字员工？ -->
+    <section id="definition" class="definition-section">
+      <div class="container">
+        <h2 class="section-title">什么是AI数字员工？</h2>
+
+        <div class="definition-card">
+          <h3 class="definition-title">不是工具，是懂业务的AI</h3>
+          <p class="definition-text">
+            通过<span class="definition-highlight">训练</span>掌握你公司的<span class="definition-highlight">业务逻辑</span>和<span class="definition-highlight">决策标准</span>，<br>
+            能够像经验丰富的员工一样，独立完成复杂的业务任务
           </p>
         </div>
       </div>
     </section>
 
+    <!-- 真实案例 -->
+    <section id="cases" class="case-section">
+      <div class="container">
+        <h2 class="section-title">真实案例</h2>
+
+        <div class="case-placeholder">
+          <p class="case-placeholder-text">案例区域</p>
+          <p class="case-placeholder-note">待基于真实业务数据填充</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA区 -->
+    <section id="cta" class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">想要训练你的第一个AI员工？</h2>
+        <a href="#" class="cta-button-secondary">了解更多</a>
+      </div>
+    </section>
+
+    <!-- MVP提示 -->
+    <div class="mvp-notice">
+      <p>🚧 这是MVP原型</p>
+      <p>完整版本将包含更多案例和交互功能</p>
+    </div>
+
   </div>
 
   <!-- 脚本 -->
-  <script src="js/bundle.js"></script>
+  <script src="js/bundle-v2.js"></script>
 </body>
 </html>
