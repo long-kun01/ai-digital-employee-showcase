@@ -97,12 +97,18 @@ export class ParticleSystem {
 
   stop() {
     if (this.animationId) {
-      cancelAnimationFrame(this.animationId);
+      const cRAF = window.cancelAnimationFrame ||
+                   window.webkitCancelAnimationFrame ||
+                   window.mozCancelAnimationFrame ||
+                   clearTimeout;
+      cRAF.call(window, this.animationId);
       this.animationId = null;
     }
   }
 
   animate() {
+    if (!this.ctx) return;
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.particles.forEach(particle => {
@@ -110,7 +116,13 @@ export class ParticleSystem {
       particle.draw();
     });
 
-    this.animationId = requestAnimationFrame(() => this.animate());
+    // 兼容性处理
+    const rAF = window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function(callback) { setTimeout(callback, 16); };
+
+    this.animationId = rAF(() => this.animate());
   }
 
   destroy() {
