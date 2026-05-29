@@ -18,10 +18,12 @@ const CONFIG = {
   },
   growth: {
     stages: [
-      { loops: 1, efficiency: 1, speed: 1.0, accuracy: 85, fit: 70 },
-      { loops: 10, efficiency: 3, speed: 1.5, accuracy: 90, fit: 80 },
-      { loops: 50, efficiency: 6, speed: 2.5, accuracy: 95, fit: 90 },
-      { loops: 100, efficiency: 10, speed: 3.5, accuracy: 99, fit: 95 }
+      { loops: 0, efficiency: 1, speed: 1.0, accuracy: 85, fit: 70 },
+      { loops: 1, efficiency: 2, speed: 1.2, accuracy: 88, fit: 75 },
+      { loops: 2, efficiency: 3.4, speed: 1.5, accuracy: 91, fit: 82 },
+      { loops: 3, efficiency: 6.8, speed: 2.0, accuracy: 95, fit: 88 },
+      { loops: 4, efficiency: 10, speed: 2.8, accuracy: 97, fit: 93 },
+      { loops: 5, efficiency: 20, speed: 4.0, accuracy: 99, fit: 96 }
     ]
   }
 };
@@ -474,10 +476,13 @@ class TurntableController {
   }
 
   calculateEfficiency(loops) {
-    if (loops <= 1) return 1;
-    if (loops <= 10) return loops <= 3 ? 1 + (loops - 1) * 0.7 : 3;
-    if (loops <= 50) return 3 + Math.floor((loops - 10) / 10) * 0.8;
-    return Math.min(10, 6 + Math.floor((loops - 50) / 10));
+    if (loops === 0) return 1;
+    if (loops === 1) return 2; // 第1次转动：成长1倍（1→2）
+    if (loops === 2) return 3.4; // 第2次转动：1.7倍增长
+    if (loops === 3) return 6.8; // 第3次转动：2倍增长
+    if (loops === 4) return 10; // 第4次转动：达到10倍目标
+    if (loops === 5) return 20; // 第5次转动：继续指数增长
+    return Math.min(50, 10 * Math.pow(2, loops - 4)); // 之后继续指数增长
   }
 
   highlightCurrentStep() {
@@ -551,7 +556,7 @@ function updateMetrics(loops) {
   }
 
   // 如果没有达到任何阶段，使用基础值
-  if (loops === 0) {
+  if (loops === 0 && !stage) {
     stage = { loops: 0, speed: 1.0, accuracy: 85, fit: 70 };
   }
 
@@ -560,7 +565,7 @@ function updateMetrics(loops) {
   const speedFill = document.querySelector('[data-fill="speed"]');
   if (speedElement && speedFill) {
     animateValue(speedElement, parseFloat(speedElement.textContent), stage.speed, 1000);
-    speedFill.style.width = `${(stage.speed / 4) * 100}%`;
+    speedFill.style.width = `${(stage.speed / 5) * 100}%`;
   }
 
   // 更新准确率指标
@@ -578,6 +583,20 @@ function updateMetrics(loops) {
     animateValue(fitElement, parseInt(fitElement.textContent), stage.fit, 1000);
     fitFill.style.width = `${stage.fit}%`;
   }
+
+  // 更新指标描述文本
+  const descElements = document.querySelectorAll('.metric-desc');
+  const descTexts = [
+    `第${loops}圈转动`,
+    `第${loops}圈转动`,
+    `第${loops}圈转动`
+  ];
+
+  descElements.forEach((el, index) => {
+    if (el && descTexts[index]) {
+      el.textContent = descTexts[index];
+    }
+  });
 }
 
 function animateValue(element, start, end, duration) {
@@ -681,9 +700,9 @@ function initGrowthChart() {
     }
 
     // 数据点
-    const traditionalData = [1, 1, 1, 1];
-    const digitalData = [1, 3, 6, 10];
-    const labels = ['1', '10', '50', '100'];
+    const traditionalData = [1, 1, 1];
+    const digitalData = [1, 10, 20];
+    const labels = ['1', '5', '10'];
 
     // 绘制传统AI线
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
@@ -797,11 +816,6 @@ function init() {
 
   // 初始化滚动动画
   scrollObserver = initScrollAnimations();
-
-  // 初始化数字动画
-  setTimeout(() => {
-    animateNumbers();
-  }, 500);
 
   // 初始化转盘控制器
   turntableController = new TurntableController();

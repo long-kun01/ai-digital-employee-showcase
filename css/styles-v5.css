@@ -205,11 +205,24 @@ section.visible {
   background: rgba(0, 229, 255, 0.02);
 }
 
-.turntable-container {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 3rem;
+/* 转盘左右布局 */
+.turntable-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+.turntable-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.turntable-right {
+  display: flex;
+  flex-direction: column;
 }
 
 /* 转盘外圈 */
@@ -452,9 +465,9 @@ section.visible {
   border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 12px;
   padding: 2rem;
-  min-height: 200px;
-  margin-bottom: 3rem;
+  min-height: 400px;
   transition: all 0.4s ease;
+  flex: 1;
 }
 
 .step-detail-panel.active {
@@ -569,39 +582,51 @@ section.visible {
 }
 
 .metric-card {
-  flex: 1;
-  min-width: 180px;
-  max-width: 240px;
-  padding: 1.5rem;
-  background: rgba(10, 46, 58, 0.95);
-  border: 1px solid rgba(0, 229, 255, 0.3);
+  background: rgba(0, 229, 255, 0.05);
+  border: 1px solid rgba(0, 229, 255, 0.2);
   border-radius: 12px;
-  text-align: center;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   transition: all 0.3s ease;
 }
 
 .metric-card:hover {
-  border-color: rgba(0, 229, 255, 0.5);
-  transform: translateY(-5px);
+  background: rgba(0, 229, 255, 0.08);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .metric-icon {
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
 }
 
 .metric-title {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #00E5FF;
-  margin-bottom: 0.5rem;
 }
 
-.metric-value {
-  font-size: 1.25rem;
+.metric-value-large {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #00D4A0;
-  margin-bottom: 0.75rem;
+}
+
+.metric-unit {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #00D4A0;
 }
 
 .metric-bar {
@@ -610,6 +635,7 @@ section.visible {
   border-radius: 4px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 0.75rem;
 }
 
 .metric-fill {
@@ -622,9 +648,84 @@ section.visible {
   width: 0%;
 }
 
+.metric-desc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* 指标图例 */
+.metrics-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.metrics-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.metrics-legend .legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.metrics-legend .active-dot {
+  background: #00D4A0;
+}
+
+.metrics-legend .target-dot {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* ==================== 成长图表区 ==================== */
 .growth-section {
   background: rgba(0, 212, 160, 0.02);
+}
+
+/* 图表左右布局 */
+.chart-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+.chart-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 指标面板 */
+.metrics-panel {
+  background: rgba(10, 46, 58, 0.95);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  position: sticky;
+  top: 20px;
+}
+
+.metrics-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #00E5FF;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .growth-chart-container {
