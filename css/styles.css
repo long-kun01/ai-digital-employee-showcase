@@ -165,9 +165,7 @@ section {
   padding: 2rem;
   border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 12px;
-  background: rgba(10, 46, 58, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 46, 58, 0.95);
   transition: all 0.3s ease;
 }
 
@@ -236,9 +234,7 @@ section {
   padding: 2rem 1.5rem;
   border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 12px;
-  background: rgba(10, 46, 58, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 46, 58, 0.95);
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -278,9 +274,7 @@ section {
   padding: 2rem;
   border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 12px;
-  background: rgba(10, 46, 58, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 46, 58, 0.9);
   margin-bottom: 3rem;
 }
 
@@ -353,9 +347,7 @@ section {
   padding: 2rem;
   border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 12px;
-  background: rgba(10, 46, 58, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 46, 58, 0.95);
   text-align: center;
 }
 
