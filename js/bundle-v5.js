@@ -890,6 +890,15 @@ function init() {
       }
     });
   });
+
+  // 隐藏加载屏幕
+  const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.classList.add('hidden');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 500);
+  }
 }
 
 // 页面加载完成后初始化

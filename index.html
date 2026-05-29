@@ -12,6 +12,14 @@
   <link rel="stylesheet" href="css/styles-v5.css">
 </head>
 <body>
+  <!-- 加载提示 -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">AI数字员工正在培养中...</div>
+    </div>
+  </div>
+
   <!-- 粒子背景 -->
   <canvas id="particle-canvas"></canvas>
 
@@ -416,6 +424,6 @@
   </div>
 
   <!-- 脚本 -->
-  <script src="js/bundle-v5.js"></script>
+  <script src="js/bundle-v5.js" defer></script>
 </body>
 </html>
