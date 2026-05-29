@@ -1284,18 +1284,32 @@ section.visible {
     font-size: 0.875rem;
   }
 
-  .hero-stats {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .stat-divider {
-    width: 60px;
-    height: 1px;
-  }
-
   .section-title {
     font-size: 1.5rem;
+  }
+
+  /* 移动端左右布局改为上下堆叠 */
+  .turntable-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .turntable-right {
+    order: 2;
+  }
+
+  /* 移动端图表布局改为上下堆叠 */
+  .chart-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .chart-right {
+    order: 2;
+  }
+
+  .metrics-panel {
+    position: static;
   }
 
   /* 转盘响应式 */
@@ -1344,12 +1358,67 @@ section.visible {
   }
 
   .turntable-controls {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
+    justify-content: center;
   }
 
   .control-btn {
-    width: 100%;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  /* 移动端步骤详情面板优化 */
+  .step-detail-panel {
+    min-height: 300px;
+    padding: 1.5rem;
+  }
+
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .detail-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .detail-title {
+    font-size: 1.25rem;
+  }
+
+  .detail-badge {
+    align-self: flex-start;
+  }
+
+  /* 移动端指标面板优化 */
+  .metrics-panel {
+    padding: 1.5rem;
+  }
+
+  .metrics-title {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-value-large {
+    font-size: 2rem;
+  }
+
+  .metric-unit {
+    font-size: 1rem;
+  }
+
+  .metrics-legend {
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   /* 指标响应式 */
