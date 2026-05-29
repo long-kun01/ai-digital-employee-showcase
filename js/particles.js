@@ -56,6 +56,12 @@ export class ParticleSystem {
       return;
     }
 
+    // 检测Canvas支持
+    if (!this.canvas.getContext) {
+      console.warn('Canvas not supported, particle animation disabled');
+      return;
+    }
+
     this.ctx = this.canvas.getContext('2d');
     this.particles = [];
     this.animationId = null;
@@ -77,6 +83,12 @@ export class ParticleSystem {
   }
 
   start() {
+    // 如果Canvas不支持，跳过
+    if (!this.ctx) {
+      console.warn('Particle system disabled (Canvas not supported)');
+      return;
+    }
+
     if (!this.particles.length) {
       this.init();
     }
