@@ -154,148 +154,145 @@
         <h2 class="section-title">成长曲线</h2>
         <p class="section-desc">随着培养圈数增加，AI能力指数级提升</p>
 
-        <!-- 图表与控制左右布局 -->
-        <div class="chart-layout">
-          <!-- 左侧：折线图 -->
-          <div class="chart-left">
-            <div class="growth-chart-container">
-              <div class="chart-header">
-                <div class="chart-title">效率提升曲线</div>
-                <div class="chart-legend">
-                  <span class="legend-item">
-                    <span class="legend-dot traditional"></span>
-                    传统AI工具
-                  </span>
-                  <span class="legend-item">
-                    <span class="legend-dot digital"></span>
-                    AI数字员工
-                  </span>
+        <!-- 指数增长图（独立大板块） -->
+        <div class="growth-chart-full">
+          <div class="growth-chart-container">
+            <div class="chart-header">
+              <div class="chart-title">效率提升曲线</div>
+              <div class="chart-legend">
+                <span class="legend-item">
+                  <span class="legend-dot traditional"></span>
+                  传统AI工具
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot digital"></span>
+                  AI数字员工
+                </span>
+              </div>
+            </div>
+
+            <div class="chart-body">
+              <canvas id="growth-chart-canvas"></canvas>
+            </div>
+
+            <div class="chart-data">
+              <div class="data-item" data-loop="1">
+                <div class="data-label">第1圈</div>
+                <div class="data-bar">
+                  <div class="data-fill traditional" style="width: 100%;"></div>
+                  <div class="data-fill digital" style="width: 100%;"></div>
+                </div>
+                <div class="data-value">
+                  <span class="traditional">1x</span>
+                  <span class="digital">1x</span>
                 </div>
               </div>
 
-              <div class="chart-body">
-                <canvas id="growth-chart-canvas"></canvas>
+              <div class="data-item" data-loop="5">
+                <div class="data-label">第5圈</div>
+                <div class="data-bar">
+                  <div class="data-fill traditional" style="width: 100%;"></div>
+                  <div class="data-fill digital" style="width: 500%;"></div>
+                </div>
+                <div class="data-value">
+                  <span class="traditional">1x</span>
+                  <span class="digital highlight-value">10x</span>
+                </div>
               </div>
 
-              <div class="chart-data">
-                <div class="data-item" data-loop="1">
-                  <div class="data-label">第1圈</div>
-                  <div class="data-bar">
-                    <div class="data-fill traditional" style="width: 100%;"></div>
-                    <div class="data-fill digital" style="width: 100%;"></div>
+              <div class="data-item" data-loop="10">
+                <div class="data-label">第10圈</div>
+                <div class="data-bar">
+                  <div class="data-fill traditional" style="width: 100%;"></div>
+                  <div class="data-fill digital" style="width: 700%;"></div>
+                </div>
+                <div class="data-value">
+                  <span class="traditional">1x</span>
+                  <span class="digital highlight-value">20x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 指标区 -->
+        <div class="metrics-section">
+          <div class="metrics-container">
+            <div class="metric-row">
+              <div class="metric-item-full">
+                <div class="metric-header">
+                  <span class="metric-icon">⚡</span>
+                  <span class="metric-title">响应速度</span>
+                </div>
+                <div class="metric-main">
+                  <div class="metric-value">
+                    <span class="metric-current" data-metric="speed">1.0</span>
+                    <span class="metric-unit">x</span>
                   </div>
-                  <div class="data-value">
-                    <span class="traditional">1x</span>
-                    <span class="digital">1x</span>
+                  <div class="metric-bar">
+                    <div class="metric-fill" data-fill="speed"></div>
                   </div>
                 </div>
+              </div>
 
-                <div class="data-item" data-loop="5">
-                  <div class="data-label">第5圈</div>
-                  <div class="data-bar">
-                    <div class="data-fill traditional" style="width: 100%;"></div>
-                    <div class="data-fill digital" style="width: 500%;"></div>
+              <div class="metric-item-full">
+                <div class="metric-header">
+                  <span class="metric-icon">🎯</span>
+                  <span class="metric-title">准确率</span>
+                </div>
+                <div class="metric-main">
+                  <div class="metric-value">
+                    <span class="metric-current" data-metric="accuracy">85</span>
+                    <span class="metric-unit">%</span>
                   </div>
-                  <div class="data-value">
-                    <span class="traditional">1x</span>
-                    <span class="digital highlight-value">10x</span>
+                  <div class="metric-bar">
+                    <div class="metric-fill" data-fill="accuracy"></div>
                   </div>
                 </div>
+              </div>
 
-                <div class="data-item" data-loop="10">
-                  <div class="data-label">第10圈</div>
-                  <div class="data-bar">
-                    <div class="data-fill traditional" style="width: 100%;"></div>
-                    <div class="data-fill digital" style="width: 700%;"></div>
+              <div class="metric-item-full">
+                <div class="metric-header">
+                  <span class="metric-icon">💡</span>
+                  <span class="metric-title">贴合度</span>
+                </div>
+                <div class="metric-main">
+                  <div class="metric-value">
+                    <span class="metric-current" data-metric="fit">70</span>
+                    <span class="metric-unit">%</span>
                   </div>
-                  <div class="data-value">
-                    <span class="traditional">1x</span>
-                    <span class="digital highlight-value">20x</span>
+                  <div class="metric-bar">
+                    <div class="metric-fill" data-fill="fit"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- 右侧：控制按钮和指标 -->
-          <div class="chart-right">
-            <div class="chart-controls-panel">
-              <h3 class="panel-title">控制圈数</h3>
+        <!-- 控制区 -->
+        <div class="control-section">
+          <div class="control-container">
+            <div class="loop-display-large">
+              <span class="loop-label-large">已转圈数</span>
+              <div class="loop-number-large" id="chart-loop-count">0</div>
+            </div>
 
-              <!-- 圈数显示和控制 -->
-              <div class="loop-control-group">
-                <div class="loop-display">
-                  <span class="loop-label">当前圈数：</span>
-                  <span class="loop-number" id="chart-loop-count">0</span>
-                </div>
-
-                <div class="loop-buttons">
-                  <button class="loop-btn" id="chart-spin-once">
-                    <span class="loop-btn-icon">↻</span>
-                    <span class="loop-btn-text">转一圈</span>
-                  </button>
-                  <button class="loop-btn" id="chart-spin-five">
-                    <span class="loop-btn-icon">↻↻</span>
-                    <span class="loop-btn-text">转五圈</span>
-                  </button>
-                </div>
-
-                <div class="loop-adjust">
-                  <button class="adjust-btn" id="chart-decrease">
-                    <span class="adjust-icon">−</span>
-                  </button>
-                  <button class="adjust-btn" id="chart-increase">
-                    <span class="adjust-icon">+</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 实时指标 -->
-              <div class="chart-metrics">
-                <h4 class="metrics-subtitle">实时指标</h4>
-
-                <div class="chart-metric-item">
-                  <div class="chart-metric-label">
-                    <span class="metric-icon">⚡</span>
-                    <span>响应速度</span>
-                  </div>
-                  <div class="chart-metric-value">
-                    <span class="metric-current" data-metric="speed">1.0</span>
-                    <span class="metric-unit">x</span>
-                  </div>
-                  <div class="chart-metric-bar">
-                    <div class="chart-metric-fill" data-fill="speed"></div>
-                  </div>
-                </div>
-
-                <div class="chart-metric-item">
-                  <div class="chart-metric-label">
-                    <span class="metric-icon">🎯</span>
-                    <span>准确率</span>
-                  </div>
-                  <div class="chart-metric-value">
-                    <span class="metric-current" data-metric="accuracy">85</span>
-                    <span class="metric-unit">%</span>
-                  </div>
-                  <div class="chart-metric-bar">
-                    <div class="chart-metric-fill" data-fill="accuracy"></div>
-                  </div>
-                </div>
-
-                <div class="chart-metric-item">
-                  <div class="chart-metric-label">
-                    <span class="metric-icon">💡</span>
-                    <span>贴合度</span>
-                  </div>
-                  <div class="chart-metric-value">
-                    <span class="metric-current" data-metric="fit">70</span>
-                    <span class="metric-unit">%</span>
-                  </div>
-                  <div class="chart-metric-bar">
-                    <div class="chart-metric-fill" data-fill="fit"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="control-buttons-large">
+              <button class="control-btn-large decrease-btn" id="chart-decrease">
+                <span class="control-icon-large">−</span>
+              </button>
+              <button class="control-btn-large spin-once-btn" id="chart-spin-once">
+                <span class="control-icon-large">↻</span>
+                <span class="control-text">转一圈</span>
+              </button>
+              <button class="control-btn-large spin-five-btn" id="chart-spin-five">
+                <span class="control-icon-large">↻↻</span>
+                <span class="control-text">转五圈</span>
+              </button>
+              <button class="control-btn-large increase-btn" id="chart-increase">
+                <span class="control-icon-large">+</span>
+              </button>
             </div>
           </div>
         </div>
