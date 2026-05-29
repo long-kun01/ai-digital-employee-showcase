@@ -767,12 +767,12 @@ function initGrowthChart() {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
       ctx.font = '12px sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText((10 - i * 2) + 'x', padding.left - 10, y + 4);
+      ctx.fillText((50 - i * 10) + 'x', padding.left - 10, y + 4);
     }
 
     // 数据点
     const traditionalData = [1, 1, 1];
-    const digitalData = [1, 10, 20];
+    const digitalData = [1, 10, 40]; // 第1圈1x，第5圈10x，第10圈40x（指数增长）
     const labels = ['1', '5', '10'];
 
     // 绘制传统AI线
