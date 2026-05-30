@@ -1093,6 +1093,21 @@ function initQRCodeModal() {
   const openBtn = document.getElementById('qrcode-btn');
   const closeBtn = document.getElementById('modal-close');
   const overlay = modal.querySelector('.modal-overlay');
+  const qrcodeImg = document.getElementById('qrcode-img');
+  const qrcodeLoading = modal.querySelector('.qrcode-loading');
+
+  // Image load handlers
+  if (qrcodeImg && qrcodeLoading) {
+    qrcodeImg.addEventListener('load', () => {
+      qrcodeImg.style.opacity = '1';
+      qrcodeLoading.style.display = 'none';
+    });
+
+    qrcodeImg.addEventListener('error', () => {
+      qrcodeImg.style.display = 'none';
+      qrcodeLoading.innerHTML = '二维码加载失败<br><span style="font-size: 0.875rem; color: rgba(255,255,255,0.5);">请访问: github.com/long-kun01/ai-digital-employee-showcase</span>';
+    });
+  }
 
   openBtn.addEventListener('click', () => {
     modal.classList.add('active');
