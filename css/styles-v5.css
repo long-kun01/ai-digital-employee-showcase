@@ -839,11 +839,16 @@ section.visible {
   font-weight: 700;
   color: #00E5FF;
   line-height: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ==================== 控制按钮区（独立） ==================== */
 .control-buttons-section {
   margin-top: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .control-buttons-large {
