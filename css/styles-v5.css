@@ -897,10 +897,6 @@ section.visible {
   min-width: 50px;
 }
 
-/* 去掉旧的chart-layout */
-.chart-layout {
-  display: none;
-}
 
 .growth-chart-container {
   background: rgba(10, 46, 58, 0.95);
@@ -1476,15 +1472,6 @@ section.visible {
     order: 2;
   }
 
-  /* 移动端图表布局改为上下堆叠 */
-  .chart-layout {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .chart-right {
-    order: 2;
-  }
 
   .metrics-panel {
     position: static;
