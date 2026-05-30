@@ -3,6 +3,13 @@
  * 核心功能：转盘旋转、折线图联动、指标动态增强、二维码弹窗
  */
 
+// ==================== 指数计算函数 ====================
+function calculateEfficiency(loops) {
+  // y = 1 + 2^(x/3)
+  // 0圈 = 1x, 3圈 = 2x, 10圈 ≈ 10x
+  return 1 + Math.pow(2, loops / 3);
+}
+
 // ==================== 配置 ====================
 const CONFIG = {
   colors: {
@@ -710,139 +717,273 @@ function updateChart(loops) {
   });
 }
 
-// ==================== 成长图表 ====================
-function initGrowthChart() {
-  const canvas = document.getElementById('growth-chart-canvas');
-  if (!canvas || !canvas.getContext) return;
+// ==================== 成长曲线图表绘制 ====================
+class GrowthChart {
+  constructor(canvasId) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) {
+      console.error(`Canvas #${canvasId} not found`);
+      return;
+    }
 
-  const ctx = canvas.getContext('2d');
-  const container = canvas.parentElement;
+    this.ctx = this.canvas.getContext('2d');
+    this.padding = { top: 40, right: 40, bottom: 60, left: 60 };
+    this.currentLoops = 0;
 
-  // 设置canvas尺寸
-  function resizeCanvas() {
-    canvas.width = container.offsetWidth;
-    canvas.height = 300;
+    // 设置Canvas尺寸
+    this.resize();
+    window.addEventListener('resize', () => {
+      this.resize();
+      this.draw(this.currentLoops);
+    });
   }
 
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  resize() {
+    const container = this.canvas.parentElement;
+    const dpr = window.devicePixelRatio || 1;
 
-  // 绘制图表
-  function drawChart() {
-    const width = canvas.width;
-    const height = canvas.height;
-    const padding = { top: 20, right: 20, bottom: 40, left: 50 };
-    const chartWidth = width - padding.left - padding.right;
-    const chartHeight = height - padding.top - padding.bottom;
+    // 获取容器宽度
+    const rect = container.getBoundingClientRect();
+    const width = rect.width - 40; // 减去padding
+    const height = 400; // 固定高度
 
-    // 清空画布
-    ctx.clearRect(0, 0, width, height);
+    // 设置实际像素尺寸
+    this.canvas.width = width * dpr;
+    this.canvas.height = height * dpr;
 
-    // 绘制坐标轴
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.3)';
+    // 设置CSS尺寸
+    this.canvas.style.width = width + 'px';
+    this.canvas.style.height = height + 'px';
+
+    // 缩放上下文
+    this.ctx.scale(dpr, dpr);
+
+    this.width = width;
+    this.height = height;
+  }
+
+  // 将圈数映射到X坐标
+  getX(loops) {
+    const chartWidth = this.width - this.padding.left - this.padding.right;
+    return this.padding.left + (loops / 10) * chartWidth;
+  }
+
+  // 将效率值映射到Y坐标
+  getY(efficiency) {
+    const chartHeight = this.height - this.padding.top - this.padding.bottom;
+    const maxY = 12; // Y轴最大值
+    return this.height - this.padding.bottom - (efficiency / maxY) * chartHeight;
+  }
+
+  drawAxes() {
+    const ctx = this.ctx;
+    const chartWidth = this.width - this.padding.left - this.padding.right;
+    const chartHeight = this.height - this.padding.top - this.padding.bottom;
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
     ctx.lineWidth = 1;
 
-    // Y轴
-    ctx.beginPath();
-    ctx.moveTo(padding.left, padding.top);
-    ctx.lineTo(padding.left, height - padding.bottom);
-    ctx.stroke();
+    // 绘制网格线（Y轴）
+    for (let i = 0; i <= 12; i += 2) {
+      const y = this.getY(i);
 
-    // X轴
-    ctx.beginPath();
-    ctx.moveTo(padding.left, height - padding.bottom);
-    ctx.lineTo(width - padding.right, height - padding.bottom);
-    ctx.stroke();
-
-    // 绘制网格线
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.1)';
-    for (let i = 0; i <= 5; i++) {
-      const y = padding.top + (chartHeight / 5) * i;
       ctx.beginPath();
-      ctx.moveTo(padding.left, y);
-      ctx.lineTo(width - padding.right, y);
+      ctx.moveTo(this.padding.left, y);
+      ctx.lineTo(this.width - this.padding.right, y);
       ctx.stroke();
 
       // Y轴标签
       ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
       ctx.font = '12px sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText((50 - i * 10) + 'x', padding.left - 10, y + 4);
+      ctx.fillText(i + 'x', this.padding.left - 10, y + 4);
     }
 
-    // 数据点
-    const traditionalData = [1, 1, 1];
-    const digitalData = [1, 10, 40]; // 第1圈1x，第5圈10x，第10圈40x（指数增长）
-    const labels = ['1', '5', '10'];
+    // 绘制网格线（X轴）
+    for (let i = 0; i <= 10; i += 2) {
+      const x = this.getX(i);
 
-    // 绘制传统AI线
+      ctx.beginPath();
+      ctx.moveTo(x, this.padding.top);
+      ctx.lineTo(x, this.height - this.padding.bottom);
+      ctx.stroke();
+
+      // X轴标签
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(i + '圈', x, this.height - this.padding.bottom + 20);
+    }
+
+    // 坐标轴
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.lineWidth = 2;
+
+    // Y轴
+    ctx.beginPath();
+    ctx.moveTo(this.padding.left, this.padding.top);
+    ctx.lineTo(this.padding.left, this.height - this.padding.bottom);
+    ctx.stroke();
+
+    // X轴
+    ctx.beginPath();
+    ctx.moveTo(this.padding.left, this.height - this.padding.bottom);
+    ctx.lineTo(this.width - this.padding.right, this.height - this.padding.bottom);
+    ctx.stroke();
+  }
+
+  drawTraditionalLine() {
+    const ctx = this.ctx;
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]); // 虚线
+
+    ctx.beginPath();
+    ctx.moveTo(this.getX(0), this.getY(1));
+    ctx.lineTo(this.getX(10), this.getY(1));
+    ctx.stroke();
+
+    ctx.setLineDash([]); // 重置虚线
+  }
+
+  drawDigitalEmployeeCurve(currentLoops) {
+    const ctx = this.ctx;
+
+    // 创建渐变
+    const gradient = ctx.createLinearGradient(
+      this.padding.left,
+      this.height - this.padding.bottom,
+      this.width - this.padding.right,
+      this.padding.top
+    );
+    gradient.addColorStop(0, '#00E5FF');
+    gradient.addColorStop(1, '#00D4A0');
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+    ctx.shadowColor = 'rgba(0, 229, 255, 0.5)';
+    ctx.shadowBlur = 10;
+
+    ctx.beginPath();
+
+    // 绘制曲线（从0到当前圈数）
+    const step = 0.1;
+    for (let x = 0; x <= currentLoops; x += step) {
+      const y = calculateEfficiency(x);
+      const canvasX = this.getX(x);
+      const canvasY = this.getY(y);
+
+      if (x === 0) {
+        ctx.moveTo(canvasX, canvasY);
+      } else {
+        ctx.lineTo(canvasX, canvasY);
+      }
+    }
+
+    ctx.stroke();
+
+    // 绘制当前点
+    const currentEfficiency = calculateEfficiency(currentLoops);
+    const pointX = this.getX(currentLoops);
+    const pointY = this.getY(currentEfficiency);
+
+    ctx.fillStyle = '#00E5FF';
+    ctx.shadowColor = 'rgba(0, 229, 255, 0.8)';
+    ctx.shadowBlur = 15;
+
+    ctx.beginPath();
+    ctx.arc(pointX, pointY, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 重置阴影
+    ctx.shadowBlur = 0;
+
+    // 显示数值
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      currentEfficiency.toFixed(1) + 'x',
+      pointX,
+      pointY - 15
+    );
+  }
+
+  drawLegend() {
+    const ctx = this.ctx;
+    const legendX = this.width - this.padding.right - 150;
+    const legendY = this.padding.top + 20;
+
+    // 传统AI图例
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]);
+
     ctx.beginPath();
-    traditionalData.forEach((value, index) => {
-      const x = padding.left + (chartWidth / (traditionalData.length - 1)) * index;
-      const y = padding.top + chartHeight - (value / 10) * chartHeight;
-      if (index === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
+    ctx.moveTo(legendX, legendY);
+    ctx.lineTo(legendX + 30, legendY);
     ctx.stroke();
+
     ctx.setLineDash([]);
 
-    // 绘制AI数字员工线
-    ctx.strokeStyle = '#00D4A0';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    digitalData.forEach((value, index) => {
-      const x = padding.left + (chartWidth / (digitalData.length - 1)) * index;
-      const y = padding.top + chartHeight - (value / 10) * chartHeight;
-      if (index === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.stroke();
-
-    // 绘制数据点
-    digitalData.forEach((value, index) => {
-      const x = padding.left + (chartWidth / (digitalData.length - 1)) * index;
-      const y = padding.top + chartHeight - (value / 10) * chartHeight;
-
-      ctx.beginPath();
-      ctx.arc(x, y, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#00D4A0';
-      ctx.fill();
-      ctx.strokeStyle = '#0A2E3A';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    });
-
-    // X轴标签
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
     ctx.font = '12px sans-serif';
-    ctx.textAlign = 'center';
-    labels.forEach((label, index) => {
-      const x = padding.left + (chartWidth / (labels.length - 1)) * index;
-      ctx.fillText(label, x, height - padding.bottom + 20);
-    });
+    ctx.textAlign = 'left';
+    ctx.fillText('传统AI工具', legendX + 40, legendY + 4);
+
+    // AI数字员工图例
+    const gradient = ctx.createLinearGradient(legendX, legendY + 25, legendX + 30, legendY + 25);
+    gradient.addColorStop(0, '#00E5FF');
+    gradient.addColorStop(1, '#00D4A0');
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+    ctx.moveTo(legendX, legendY + 25);
+    ctx.lineTo(legendX + 30, legendY + 25);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('AI数字员工', legendX + 40, legendY + 29);
   }
 
-  // 初始绘制
-  drawChart();
+  draw(loops) {
+    this.currentLoops = loops;
 
-  // 监听窗口大小变化
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      resizeCanvas();
-      drawChart();
-    }, 250);
-  });
+    // 清除画布
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    // 绘制各元素
+    this.drawAxes();
+    this.drawTraditionalLine();
+    this.drawDigitalEmployeeCurve(loops);
+    this.drawLegend();
+  }
+}
+
+// ==================== 成长图表初始化 ====================
+function initGrowthChart() {
+  let growthChart = null;
+
+  function init() {
+    growthChart = new GrowthChart('growth-chart-canvas');
+    growthChart.draw(0);
+  }
+
+  function update(loops) {
+    if (growthChart) {
+      growthChart.draw(loops);
+    }
+  }
+
+  // 暴露更新函数
+  window.updateGrowthChart = update;
+
+  init();
 }
 
 // ==================== 图表控制器 ====================
@@ -860,7 +1001,7 @@ function initChartControls() {
       chartLoopCount++;
       updateChartControls(chartLoopCount);
       updateMetrics(chartLoopCount);
-      updateChart(chartLoopCount);
+      window.updateGrowthChart(chartLoopCount);
     });
   }
 
@@ -869,7 +1010,7 @@ function initChartControls() {
       chartLoopCount += 5;
       updateChartControls(chartLoopCount);
       updateMetrics(chartLoopCount);
-      updateChart(chartLoopCount);
+      window.updateGrowthChart(chartLoopCount);
     });
   }
 
@@ -879,7 +1020,7 @@ function initChartControls() {
         chartLoopCount--;
         updateChartControls(chartLoopCount);
         updateMetrics(chartLoopCount);
-        updateChart(chartLoopCount);
+        window.updateGrowthChart(chartLoopCount);
       }
     });
   }
@@ -889,7 +1030,7 @@ function initChartControls() {
       chartLoopCount++;
       updateChartControls(chartLoopCount);
       updateMetrics(chartLoopCount);
-      updateChart(chartLoopCount);
+      window.updateGrowthChart(chartLoopCount);
     });
   }
 
