@@ -816,66 +816,64 @@ section.visible {
   width: 0%;
 }
 
-/* 控制区 */
-.control-section {
-  margin-bottom: 3rem;
-}
-
-.control-container {
-  background: rgba(10, 46, 58, 0.95);
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  border-radius: 12px;
-  padding: 2rem;
-}
-
+/* ==================== 圈数显示区 ==================== */
 .loop-display-large {
-  text-align: center;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  background: rgba(0, 229, 255, 0.05);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
 }
 
 .loop-label-large {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  display: block;
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0.5rem;
 }
 
 .loop-number-large {
   font-size: 4rem;
   font-weight: 700;
-  color: #00D4A0;
+  color: #00E5FF;
   line-height: 1;
+}
+
+/* ==================== 控制按钮区（独立） ==================== */
+.control-buttons-section {
+  margin-top: 2rem;
 }
 
 .control-buttons-large {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .control-btn-large {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 1.5rem;
+  min-width: 60px;
+  height: 50px;
+  padding: 0 1.5rem;
   background: rgba(0, 229, 255, 0.1);
-  border: 2px solid rgba(0, 229, 255, 0.3);
-  border-radius: 12px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 8px;
   color: #00E5FF;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 80px;
 }
 
 .control-btn-large:hover {
   background: rgba(0, 229, 255, 0.2);
-  border-color: rgba(0, 229, 255, 0.6);
+  border-color: #00E5FF;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 229, 255, 0.2);
 }
 
 .control-btn-large:active {
@@ -884,24 +882,19 @@ section.visible {
 
 .control-icon-large {
   font-size: 1.5rem;
-  font-weight: 700;
 }
 
 .control-text {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
 }
 
-/* 加减按钮特殊样式 */
-.decrease-btn,
-.increase-btn {
-  min-width: 60px;
-  padding: 1rem;
+/* 按钮特定样式 */
+.spin-once-btn, .spin-five-btn {
+  min-width: 100px;
 }
 
-.decrease-btn .control-icon-large,
-.increase-btn .control-icon-large {
-  font-size: 2rem;
+.decrease-btn, .increase-btn {
+  min-width: 50px;
 }
 
 /* 去掉旧的chart-layout */
