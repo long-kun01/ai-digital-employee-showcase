@@ -717,6 +717,25 @@ function updateChart(loops) {
   });
 }
 
+// ==================== 成长图表配置常量 ====================
+const CHART_CONFIG = {
+  MAX_Y: 12,
+  CURVE_STEP: 0.1,
+  CURRENT_POINT_RADIUS: 8,
+  LEGEND_OFFSET_X: 150,
+  LEGEND_OFFSET_Y: 20,
+  COLORS: {
+    TRADITIONAL_LINE: 'rgba(255, 255, 255, 0.3)',
+    DIGITAL_GRADIENT_START: '#00E5FF',
+    DIGITAL_GRADIENT_END: '#00D4A0',
+    CURRENT_POINT: '#00E5FF'
+  },
+  FONTS: {
+    LABEL: '12px sans-serif',
+    VALUE: 'bold 14px sans-serif'
+  }
+};
+
 // ==================== 成长曲线图表绘制 ====================
 class GrowthChart {
   constructor(canvasId) {
@@ -730,22 +749,25 @@ class GrowthChart {
     this.padding = { top: 40, right: 40, bottom: 60, left: 60 };
     this.currentLoops = 0;
 
-    // 设置Canvas尺寸
-    this.resize();
-    window.addEventListener('resize', () => {
+    // 存储resize处理器以便后续清理
+    this.resizeHandler = () => {
       this.resize();
       this.draw(this.currentLoops);
-    });
+    };
+
+    // 设置Canvas尺寸
+    this.resize();
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   resize() {
     const container = this.canvas.parentElement;
-    const dpr = window.devicePixelRatio || 1;
+    if (!container) return;
 
-    // 获取容器宽度
     const rect = container.getBoundingClientRect();
     const width = rect.width - 40; // 减去padding
     const height = 400; // 固定高度
+    const dpr = window.devicePixelRatio || 1;
 
     // 设置实际像素尺寸
     this.canvas.width = width * dpr;
@@ -755,7 +777,8 @@ class GrowthChart {
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
 
-    // 缩放上下文
+    // 重置变换矩阵并设置缩放（仅执行一次）
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0); // 重置
     this.ctx.scale(dpr, dpr);
 
     this.width = width;
@@ -771,8 +794,7 @@ class GrowthChart {
   // 将效率值映射到Y坐标
   getY(efficiency) {
     const chartHeight = this.height - this.padding.top - this.padding.bottom;
-    const maxY = 12; // Y轴最大值
-    return this.height - this.padding.bottom - (efficiency / maxY) * chartHeight;
+    return this.height - this.padding.bottom - (efficiency / CHART_CONFIG.MAX_Y) * chartHeight;
   }
 
   drawAxes() {
@@ -784,7 +806,7 @@ class GrowthChart {
     ctx.lineWidth = 1;
 
     // 绘制网格线（Y轴）
-    for (let i = 0; i <= 12; i += 2) {
+    for (let i = 0; i <= CHART_CONFIG.MAX_Y; i += 2) {
       const y = this.getY(i);
 
       ctx.beginPath();
@@ -794,7 +816,7 @@ class GrowthChart {
 
       // Y轴标签
       ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      ctx.font = '12px sans-serif';
+      ctx.font = CHART_CONFIG.FONTS.LABEL;
       ctx.textAlign = 'right';
       ctx.fillText(i + 'x', this.padding.left - 10, y + 4);
     }
@@ -810,7 +832,7 @@ class GrowthChart {
 
       // X轴标签
       ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      ctx.font = '12px sans-serif';
+      ctx.font = CHART_CONFIG.FONTS.LABEL;
       ctx.textAlign = 'center';
       ctx.fillText(i + '圈', x, this.height - this.padding.bottom + 20);
     }
@@ -835,7 +857,7 @@ class GrowthChart {
   drawTraditionalLine() {
     const ctx = this.ctx;
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.strokeStyle = CHART_CONFIG.COLORS.TRADITIONAL_LINE;
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]); // 虚线
 
@@ -857,8 +879,8 @@ class GrowthChart {
       this.width - this.padding.right,
       this.padding.top
     );
-    gradient.addColorStop(0, '#00E5FF');
-    gradient.addColorStop(1, '#00D4A0');
+    gradient.addColorStop(0, CHART_CONFIG.COLORS.DIGITAL_GRADIENT_START);
+    gradient.addColorStop(1, CHART_CONFIG.COLORS.DIGITAL_GRADIENT_END);
 
     ctx.strokeStyle = gradient;
     ctx.lineWidth = 3;
@@ -868,7 +890,7 @@ class GrowthChart {
     ctx.beginPath();
 
     // 绘制曲线（从0到当前圈数）
-    const step = 0.1;
+    const step = CHART_CONFIG.CURVE_STEP;
     for (let x = 0; x <= currentLoops; x += step) {
       const y = calculateEfficiency(x);
       const canvasX = this.getX(x);
@@ -888,12 +910,12 @@ class GrowthChart {
     const pointX = this.getX(currentLoops);
     const pointY = this.getY(currentEfficiency);
 
-    ctx.fillStyle = '#00E5FF';
+    ctx.fillStyle = CHART_CONFIG.COLORS.CURRENT_POINT;
     ctx.shadowColor = 'rgba(0, 229, 255, 0.8)';
     ctx.shadowBlur = 15;
 
     ctx.beginPath();
-    ctx.arc(pointX, pointY, 8, 0, Math.PI * 2);
+    ctx.arc(pointX, pointY, CHART_CONFIG.CURRENT_POINT_RADIUS, 0, Math.PI * 2);
     ctx.fill();
 
     // 重置阴影
@@ -901,7 +923,7 @@ class GrowthChart {
 
     // 显示数值
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 14px sans-serif';
+    ctx.font = CHART_CONFIG.FONTS.VALUE;
     ctx.textAlign = 'center';
     ctx.fillText(
       currentEfficiency.toFixed(1) + 'x',
@@ -912,11 +934,11 @@ class GrowthChart {
 
   drawLegend() {
     const ctx = this.ctx;
-    const legendX = this.width - this.padding.right - 150;
-    const legendY = this.padding.top + 20;
+    const legendX = this.width - this.padding.right - CHART_CONFIG.LEGEND_OFFSET_X;
+    const legendY = this.padding.top + CHART_CONFIG.LEGEND_OFFSET_Y;
 
     // 传统AI图例
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.strokeStyle = CHART_CONFIG.COLORS.TRADITIONAL_LINE;
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]);
 
@@ -928,14 +950,14 @@ class GrowthChart {
     ctx.setLineDash([]);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.font = '12px sans-serif';
+    ctx.font = CHART_CONFIG.FONTS.LABEL;
     ctx.textAlign = 'left';
     ctx.fillText('传统AI工具', legendX + 40, legendY + 4);
 
     // AI数字员工图例
     const gradient = ctx.createLinearGradient(legendX, legendY + 25, legendX + 30, legendY + 25);
-    gradient.addColorStop(0, '#00E5FF');
-    gradient.addColorStop(1, '#00D4A0');
+    gradient.addColorStop(0, CHART_CONFIG.COLORS.DIGITAL_GRADIENT_START);
+    gradient.addColorStop(1, CHART_CONFIG.COLORS.DIGITAL_GRADIENT_END);
 
     ctx.strokeStyle = gradient;
     ctx.lineWidth = 3;
@@ -946,12 +968,21 @@ class GrowthChart {
     ctx.stroke();
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.font = '12px sans-serif';
+    ctx.font = CHART_CONFIG.FONTS.LABEL;
     ctx.textAlign = 'left';
     ctx.fillText('AI数字员工', legendX + 40, legendY + 29);
   }
 
   draw(loops) {
+    // 验证canvas和context存在
+    if (!this.canvas || !this.ctx) return;
+
+    // 验证输入
+    if (typeof loops !== 'number' || loops < 0 || loops > 10) {
+      console.warn('Invalid loops value:', loops);
+      loops = Math.max(0, Math.min(10, loops));
+    }
+
     this.currentLoops = loops;
 
     // 清除画布
@@ -962,6 +993,13 @@ class GrowthChart {
     this.drawTraditionalLine();
     this.drawDigitalEmployeeCurve(loops);
     this.drawLegend();
+  }
+
+  destroy() {
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+      this.resizeHandler = null;
+    }
   }
 }
 
@@ -980,8 +1018,16 @@ function initGrowthChart() {
     }
   }
 
-  // 暴露更新函数
+  function destroy() {
+    if (growthChart) {
+      growthChart.destroy();
+      growthChart = null;
+    }
+  }
+
+  // 暴露更新函数和清理函数
   window.updateGrowthChart = update;
+  window.destroyGrowthChart = destroy;
 
   init();
 }
@@ -1136,5 +1182,8 @@ window.addEventListener('beforeunload', () => {
   }
   if (scrollObserver) {
     scrollObserver.disconnect();
+  }
+  if (window.destroyGrowthChart) {
+    window.destroyGrowthChart();
   }
 });
