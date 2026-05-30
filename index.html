@@ -402,12 +402,16 @@
         </div>
         <div class="modal-body">
           <div class="qrcode-container">
-            <div class="qrcode-placeholder" id="qrcode-placeholder">
-              <img src="assets/qrcode.jpg" alt="AI数字员工训练二维码" class="qrcode-image" onerror="this.src='assets/qrcode-placeholder.jpg'">
-            </div>
+            <div class="qrcode-loading">加载中...</div>
+            <img src="./assets/qrcode.jpg"
+                 alt="AI数字员工训练二维码"
+                 class="qrcode-image"
+                 onload="this.style.opacity='1'; this.previousElementSibling.style.display='none';"
+                 onerror="this.style.display='none'; this.previousElementSibling.innerHTML='二维码加载失败<br><span style=\'font-size: 0.875rem; color: rgba(255,255,255,0.5);\'>请访问: github.com/long-kun01/ai-digital-employee-showcase</span>';">
           </div>
           <div class="qrcode-desc">
             <p>扫码立即培养你的数字员工</p>
+            <p class="qrcode-link">或访问: github.com/long-kun01/ai-digital-employee-showcase</p>
           </div>
         </div>
       </div>

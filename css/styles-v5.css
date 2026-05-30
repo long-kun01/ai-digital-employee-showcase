@@ -1245,7 +1245,7 @@ section.visible {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 9999;
   display: none;
 }
 
@@ -1264,17 +1264,17 @@ section.visible {
 }
 
 .modal-content {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(10, 46, 58, 0.98);
-  border: 2px solid rgba(0, 229, 255, 0.5);
+  width: 90%;
+  max-width: 400px;
+  background: #0A2E3A;
+  border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 16px;
   padding: 2rem;
-  min-width: 300px;
-  max-width: 90%;
-  box-shadow: 0 20px 60px rgba(0, 229, 255, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
@@ -1286,79 +1286,83 @@ section.visible {
 
 .modal-header h3 {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #00E5FF;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
 }
 
 .modal-close {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 229, 255, 0.3);
-  background: transparent;
-  color: #00E5FF;
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-  background: rgba(0, 229, 255, 0.1);
-  border-color: rgba(0, 229, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
 }
 
 .modal-body {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .qrcode-container {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1;
   margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.qrcode-placeholder {
-  width: 250px;
-  height: 250px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
+.qrcode-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding: 10px;
-}
-
-.qrcode-text {
-  text-align: center;
-  color: #0A2E3A;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
 }
 
 .qrcode-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center;
-  border-radius: 8px;
-  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.qrcode-icon {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+.qrcode-desc {
+  text-align: center;
 }
 
 .qrcode-desc p {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 }
 
-.qrcode-hint {
+.qrcode-link {
   font-size: 0.875rem;
-  color: rgba(0, 212, 160, 0.8);
+  color: #00E5FF;
+  word-break: break-all;
 }
 
 /* ==================== MVP提示 ==================== */
@@ -1671,13 +1675,11 @@ section.visible {
 
   /* 二维码弹窗响应式 */
   .modal-content {
-    min-width: 280px;
     padding: 1.5rem;
   }
 
-  .qrcode-placeholder {
-    width: 180px;
-    height: 180px;
+  .qrcode-container {
+    max-width: 220px;
   }
 }
 
@@ -1738,8 +1740,7 @@ section.visible {
     padding: 1.25rem;
   }
 
-  .qrcode-placeholder {
-    width: 160px;
-    height: 160px;
+  .qrcode-container {
+    max-width: 200px;
   }
 }
